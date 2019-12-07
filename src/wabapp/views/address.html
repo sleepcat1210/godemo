@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>用户地址</title>
+</head>
+<body>
+    <a href="/address/add?uid={{.uid}}">添加地址</a>
+    <ul>
+    {{range $index,$val := .address}}
+    <li> 
+        {{$val.User.Name}}
+    <a href="/info?id={{$val.Id}}">{{$val.Addr}}</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/user/edit?id={{$val.Id}}">编辑</a>
+    &nbsp;&nbsp;&nbsp;&nbsp;<a href="/del?id={{$val.Id}}">删除</a>
+    </li>
+    {{end}}
+</ul>
+</body>
+</html>

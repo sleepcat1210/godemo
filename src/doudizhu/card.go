@@ -21,7 +21,8 @@ func main() {
 		user.pokerCards[i], user.pokerCards[num] = user.pokerCards[num], user.pokerCards[i]
 	}
 	fmt.Println(user.pokerCards)	
-	user.Lock()
+	user.Lock()	   
+	user.card =[]poker.PokerSet{poker.PokerSet{},poker.PokerSet{},poker.PokerSet{}}
 	for i,cards := range user.pokerCards{
 		if i > 50{
 			break
@@ -29,15 +30,39 @@ func main() {
 		 shang := i/17
 		// fmt.Println(cards)
 		// fmt.Println(shang)
+		
 		user.card[shang] = append(user.card[shang],cards)
+		// user.card[shang] =cards
 	}
+	user.bottomCards = user.pokerCards[51:]
 	user.Unlock()
 	// user.Card=card
-	// fmt.Println(user.Card)
+	fmt.Println(user.card)
 	// card.SortAsc()
-	// for _,v :=range user.Card{
-	// 	// for _,val :=range v.Card{
-	// 		fmt.Println(v)
-	// 	// }		
-	// }
+	for _,v :=range user.card{
+		for _,val :=range v{
+			fmt.Println(val)
+		}
+		fmt.Println("-------------------------------------------")		
+	}
+	fmt.Println("--------------------洗牌之前--------------------------")
+	user.sortPlayerCards()
+	for _,v :=range user.card{
+		for _,val :=range v{
+			fmt.Println(val)
+		}
+		fmt.Println("-------------------------------------------")		
+	}
+	fmt.Println(user.bottomCards)
+	for _,val :=range user.bottomCards{
+		fmt.Println(val)
+	}	
+}
+//排序
+func (user *User) sortPlayerCards(){
+	  user.Lock()
+	  defer user.Unlock()
+	  for _,val :=range user.card{
+		  val.SortAsc()
+	  }
 }
